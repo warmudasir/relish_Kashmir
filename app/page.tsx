@@ -5,11 +5,12 @@ import Footer from "./components/footer";
 export default function Home() {
   return (
     <main>
-      <Header></Header>
+      <Header/>
       <Products/>
       <Footer/>
     </main>
   );
 }
 
+// mongodb://localhost:27017
 // mongodb://localhost:27017

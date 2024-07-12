@@ -1,19 +1,25 @@
 import React from 'react'
+import Image from 'next/image'
+import logo from "../../images/logo.png"
 
 const header = () => {
   return (
-    <div style={{display:'flex',justifyContent:'space-between',padding:'30px'}}>
+    <div style={{display:'flex',justifyContent:'space-between',padding:'10px',backgroundColor:'#124E66',position:'fixed',width:'100%',alignItems:'center',color:'white'}}>
       <div>
-        <h1>Image</h1>
+      <Image
+                  src={logo}
+                  alt="Logo"
+                  width={200}
+                />
       </div>
       <div>
         <input type="text-area"/>
       </div>
-      <div style={{width:'200px'}}>
+      <div style={{width:'300px'}}>
         <ul style={{width:'100%',display:'flex',justifyContent:'space-between'}}>
-            <li>l1</li>
-            <li>l2</li>
-            <li>l3</li>
+            <li>Cart</li>
+            <li>Orders</li>
+            <li>Login/Signup</li>
         </ul>
       </div>
     </div>

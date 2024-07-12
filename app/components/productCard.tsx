@@ -4,7 +4,7 @@ import Saffron from "../../images/saffron.jpeg"
 
 const productCard = () => {
   return (
-    <div style={{width:'200px',padding:'5px',backgroundColor:'grey',borderRadius:'2px'}}>
+    <div style={{width:'200px',padding:'5px',backgroundColor:'#124E66',borderRadius:'2px',color:'white'}}>
       <div style={{width:'100%'}}>
       <Image
                   src={Saffron}
