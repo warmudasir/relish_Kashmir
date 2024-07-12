@@ -1,0 +1,82 @@
+// app/productdescription/[id]/page.tsx
+"use client"
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Header from '@/app/components/header';
+import Footer from '@/app/components/footer';
+import ProductCard from '@/app/components/productCard';
+
+
+
+
+interface Product {
+  _id: string;
+  id: number;
+  Name: string;
+  price?: string;
+}
+
+
+const ProductDescription = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+  const router = useRouter();
+  // console.log(id);
+
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (id) {
+        try {
+          const response = await fetch(`/api/data`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch product');
+          }
+          const products: Product[] = await response.json();
+          const foundProduct = products.find((product) => product._id === id);
+          setProduct(foundProduct || null);
+        } catch (error) {
+          console.error('Error fetching product:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
+  const buyprod =()=>{
+    navigator
+    console.log(product._id);
+    router.push(`/productbuy/${product._id}`);
+  }
+  
+  // console.log(product._id)
+  return (
+    <div>
+      {/* <h1>{product.Name}</h1>
+      <p>ID: {product.id}</p>
+      <p>Price: {product.price ? `$${product.price}` : 'No price available'}</p> */}
+      <Header/>
+      <div style={{padding:'100px',display:'flex',alignItems:'center'}}>
+        <ProductCard/>
+        <div>
+          <button style={{marginLeft:'100px',backgroundColor:'#050A44',color:'white',padding:'15px',borderRadius:'2px'}} onClick={buyprod}>Buy Now</button>
+        </div>
+      </div>
+      <Footer/>
+    </div>
+  );
+};
+
+export default ProductDescription;
