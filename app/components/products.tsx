@@ -1,9 +1,11 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import ProductCard from './productCard';
 import styles from './products.module.scss';
 import Link from 'next/link';
+import jwt from 'jsonwebtoken';
+// import { getEmailFromToken } from '../utility/authtoken'; 
 
 interface Product {
   _id: string;
@@ -13,9 +15,11 @@ interface Product {
 }
 
 const Products = () => {
+  const SECRET_KEY = process.env.SECRET_KEY || 'hello123';
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  // const email = getEmailFromToken();
+  // console.log(email);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,11 +39,6 @@ const Products = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (products.length > 0) {
-      console.log(products[0].id); // Log the id of the first product
-    }
-  }, [products]);
 
   if (isLoading) {
     return <div>Loading...</div>;

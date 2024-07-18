@@ -13,8 +13,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     
     const db = client.db(dbName);
     
-    const collection = db.collection('items');
-  
+    const collection = db.collection('orders');
+    console.log("called");
     const posts = await collection.find({}).toArray();
 
     res.json(posts); // Send JSON response
