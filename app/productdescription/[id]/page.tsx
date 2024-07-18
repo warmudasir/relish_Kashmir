@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '@/app/components/header';
 import Footer from '@/app/components/footer';
 import ProductCard from '@/app/components/productCard';
+import Quantity from '@/app/components/quantity';
 
 
 
@@ -64,14 +65,15 @@ const ProductDescription = ({ params }: { params: { id: string } }) => {
   // console.log(product._id)
   return (
     <div>
-      {/* <h1>{product.Name}</h1>
-      <p>ID: {product.id}</p>
-      <p>Price: {product.price ? `$${product.price}` : 'No price available'}</p> */}
+
       <Header/>
       <div style={{padding:'100px',display:'flex',alignItems:'center'}}>
         <ProductCard/>
-        <div>
-          <button style={{marginLeft:'100px',backgroundColor:'#050A44',color:'white',padding:'15px',borderRadius:'2px'}} onClick={buyprod}>Buy Now</button>
+        <div style={{marginLeft:'100px'}}>
+          <h1 style={{fontSize:'20px',fontWeight:'bold'}}>Saffron contains antioxidants that may be good for the brain and nervous system. </h1>
+          <p>Healthy and pure saffron from kashmir. Enjoy the best taste and aroma</p>
+          <Quantity/>
+          <button style={{backgroundColor:'#050A44',color:'white',padding:'15px',borderRadius:'2px'}} onClick={buyprod} className='my-5'>Buy Now</button>
         </div>
       </div>
       <Footer/>
