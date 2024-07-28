@@ -31,7 +31,8 @@ let client: MongoClient;
         const token = jwt.sign(
             { 
               email: user.email,
-              firstName: user.firstName // Access the property directly
+              firstName: user.firstName,
+              role:user.role// Access the property directly
             },
             SECRET_KEY,
             { expiresIn: '1h' }

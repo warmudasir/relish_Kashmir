@@ -15,6 +15,7 @@ interface Product {
   id: number;
   Name: string;
   price?: string;
+  imageUrl:String
 }
 
 
@@ -63,12 +64,15 @@ const ProductDescription = ({ params }: { params: { id: string } }) => {
   }
   
   // console.log(product._id)
+  console.log("chello")
+  console.log(product.imageUrl);
+  console.log("Check");
   return (
     <div>
 
       <Header/>
       <div style={{padding:'100px',display:'flex',alignItems:'center'}}>
-        <ProductCard/>
+        <ProductCard product={product}/>
         <div style={{marginLeft:'100px'}}>
           <h1 style={{fontSize:'20px',fontWeight:'bold'}}>Saffron contains antioxidants that may be good for the brain and nervous system. </h1>
           <p>Healthy and pure saffron from kashmir. Enjoy the best taste and aroma</p>

@@ -33,7 +33,8 @@ const Products = () => {
           throw new Error('Failed to fetch products');
         }
         const result = await response.json();
-        setOrders(result);
+        const filteredOrders = result.filter(order => order.email === userData.email);
+        setOrders(filteredOrders);
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
@@ -49,7 +50,7 @@ const Products = () => {
     return <div>Loading...</div>;
   }
 
-  if (orders.length === 0) {
+  if (userData?.email && orders.length === 0) {
     return <div>No orders</div>;
   }
 
