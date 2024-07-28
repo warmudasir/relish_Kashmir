@@ -68,6 +68,7 @@ const footer = () => {
             <li  style={{marginBottom:'20px'}}>Jobs</li>
             <li  style={{marginBottom:'20px'}}>Wholesale</li>
             <li  style={{marginBottom:'20px'}}>Blog</li>
+            <li  style={{marginBottom:'20px'}}>Admin</li>
           </ul>
         </div>
       </div>

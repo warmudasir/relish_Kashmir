@@ -39,7 +39,8 @@ const Products = () => {
     fetchData();
   }, []);
 
-
+  console.log(products);
+  console.log("Hello");
   if (isLoading) {
     return <div>Loading...</div>;
   }

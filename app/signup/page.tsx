@@ -14,6 +14,7 @@ const SignupPage = () => {
   const { register, handleSubmit } = useForm();
 
   const orderInfo = async (data: any) => {
+    data.role="user";
     const response = await fetch('/api/users', {
       method: 'POST',
       headers: {

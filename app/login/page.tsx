@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import jwt from 'jsonwebtoken';
 
+
 interface IFormInput {
   email: string;
   password: string;
@@ -32,17 +33,21 @@ const validateLogin = async (data: IFormInput, router: any) => {
     // var decoded = jwt.verify(token, 'hello123');
     // console.log(decoded.email) // bar
     // console.log(decode);
-
-    if (token) {
+    const decoded = jwt.verify(token,SECRET_KEY);
+    // console.log(decoded.role);
+    if (decoded.role=='admin') {
         console.log('Login successful');
-        
+        localStorage.setItem('token', token);
+        router.push('/admin');
+      } else if(decoded.role==='user') {
         localStorage.setItem('token', token);
         router.push('/');
-      } else {
+      } 
+      else{
         console.error('Invalid email or password');
         // Show an error message to the user
         alert('Invalid email or password');
-      } 
+      }
 
     // Match email and password
   } catch (error) {
