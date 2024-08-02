@@ -9,43 +9,22 @@ export default async function orderHandler(req:NextApiRequest, res:NextApiRespon
 let client: MongoClient;
   if (req.method === 'POST') {
     
-    const { firstName, lastName, email, phone ,address , pincode, itemNumber,quantity,productname,productprice,imageUrl  } = req.body;
+    const { updateQuantity,productName } = req.body;
 
     try {
       client = new MongoClient(uri);
       await client.connect();
       const db = client.db('relishKashmir');
-
-      const collection = db.collection('orders');
       const itemsCollection = db.collection('items');
     
-       // Fetch the current quantity of the item
-
-      const item = await itemsCollection.findOne({ name: productname });
-
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-
-    // Calculate the new quantity
-    const newQuantity = item.quantity - quantity;
-
-    if (newQuantity < 0) {
-      return res.status(400).json({ message: 'Insufficient stock' });
-    }
-
     // Update the quantity in the database
     const updateDoc = {
       $set: {
-        quantity: newQuantity,
+        quantity: updateQuantity,
       },
     };
 
-    const result1 = await itemsCollection.updateOne({ name: productname }, updateDoc);
-    const result = await collection.insertOne({firstName, lastName, email, phone ,address , pincode, itemNumber,quantity,productname,productprice, imageUrl});
-
-    // const result1 = await itemsCollection.updateOne(filter, updateDoc);
-
+    const result = await itemsCollection.updateOne({ name: productName }, updateDoc);
 
       res.status(200).json({ message: 'Form submitted successfully', result });
     } catch (error) {

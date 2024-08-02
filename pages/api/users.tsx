@@ -22,10 +22,20 @@ let client: MongoClient;
       const db = client.db('relishKashmir');
 
       const collection = db.collection('users');
-      const result = await collection.insertOne({firstName, lastName, email, phone,password,role });
-
-      res.status(200).json({ message: 'Form submitted successfully', result });
+      // Check if user already exists
+      const existingUser = await collection.findOne({ $or: [{ email }, { phone }] });
+      if(existingUser)
+      {
+        res.status(200).json({ message: 'User Exists', result });
+      }
+      else
+      {
         
+        const result = await collection.insertOne({firstName, lastName, email, phone,password,role });
+  
+        res.status(200).json({ message: 'Form submitted successfully', result });
+          
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });

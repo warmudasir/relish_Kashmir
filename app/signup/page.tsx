@@ -22,12 +22,13 @@ const SignupPage = () => {
       },
       body: JSON.stringify(data),
     });
-
+    
+    const result = await response.json();
+    console.log(response);
+    console.log(result.message);
     if (response.ok) {
-      const result = await response.json();
-      console.log(result);
       router.push("/login");
-    } else {
+    } else{
       console.error('Failed to submit form');
     }
   };

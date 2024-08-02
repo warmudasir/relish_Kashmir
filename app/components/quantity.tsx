@@ -1,15 +1,14 @@
 "use client"
-import React from 'react'
-import {useState} from 'react'
+import React from 'react';
 
-const quantity = () => {
-
-  const [quantity,setQuantity]=useState(1);
+const Quantity = ({ quantity, setQuantity }) => {
   return (
     <div style={{width:'80px',display:'flex',justifyContent:'space-between',border:'solid 1px black'}} >
-      <button style={{backgroundColor:'grey',width:'20px'}} onClick={()=>{setQuantity(quantity<=1?1:quantity-1)}}>-</button><span>{quantity}</span><button style={{backgroundColor:'grey',width:'20px'}} onClick={()=>{setQuantity(quantity+1)}}>+</button>
+      <button style={{backgroundColor:'grey',width:'20px'}} onClick={() => setQuantity(quantity <= 1 ? 1 : quantity - 1)}>-</button>
+      <span>{quantity}</span>
+      <button style={{backgroundColor:'grey',width:'20px'}} onClick={() => setQuantity(quantity + 1)}>+</button>
     </div>
-  )
-}
+  );
+};
 
-export default quantity
+export default Quantity;
