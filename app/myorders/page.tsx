@@ -1,30 +1,30 @@
 "use client"
 
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import jwt from 'jsonwebtoken';
 import Header from '../components/header';
 import Footer from '../components/footer';
-import saffron from "../../images/saffron.jpeg"
 import Image from 'next/image';
-import {getUserToken} from "../utility/authtoken";
-
-// import { getEmailFromToken } from '../utility/authtoken'; 
+import { getUserToken } from "../utility/authtoken";
 
 interface Product {
   _id: string;
   id: number;
   Name: string;
   price?: string;
+  imageUrl: string;
+  productname: string;
+  quantity: number;
+  productprice: number;
 }
 
 const Products = () => {
   const SECRET_KEY = process.env.SECRET_KEY || 'hello123';
   const [orders, setOrders] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const userData=getUserToken();
-  // const email = getEmailFromToken();
-  // console.log(email);
+  const userData = getUserToken();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,55 +45,130 @@ const Products = () => {
     fetchData();
   }, []);
 
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (userData?.email && orders.length === 0) {
-    return <div>No orders</div>;
-  }
-
-  if(userData?.email)
-  {
     return (
-        <div>
-          <Header/>
-          {orders.map((order)=>(
-          <div style={{padding:'100px'}}>
-            <div style={{backgroundColor:'#FBE9D0',padding:'20px',display:'flex',justifyContent:'space-between',height:'200px',boxShadow:'1px 1px 1px 1px black'}}>
-            <Image
-                      src={order.imageUrl}
-                      alt="Logo"
-                      width={200}
-                      height={200}
-                    />
-
-                    <div>
-                    <h2>Order Details</h2>
-            <h1>Product Name: {order.productname}</h1>
-            <h1>Total Quantity: {order.quantity}</h1>
-            <h1>Total Payable: {order.productprice*order.quantity}</h1>
-            <p>Description: Healthy and pure saffron from kashmir. Enjoy the best taste and aroma</p>
-                    </div>
-            <h2>Order Status</h2>
-            </div>
-          </div>
-          ))}
-          <Footer/>
+      <div>
+        <Header />
+        <div className="no-orders">
+          <h2>No orders found</h2>
         </div>
-      );
+        <Footer />
+      </div>
+    );
   }
-  return(
-    <>
-    <Header/>
-    <div style={{padding:'100px'}}>
-        <h2>Please Login In First to check your orders</h2>
+
+  return (
+    <div>
+      <Header />
+      <div className="orders-container">
+        {userData?.email ? (
+          orders.map((order) => (
+            <div className="order-card" key={order._id}>
+              <Image
+                src={order.imageUrl}
+                alt="Product Image"
+                width={200}
+                height={200}
+                className="product-image"
+              />
+
+              <div className="order-details">
+                <h2>Order Details</h2>
+                <h3>Product Name: {order.productname}</h3>
+                <p>Total Quantity: {order.quantity}</p>
+                <p>Total Payable: ₹{order.productprice * order.quantity}</p>
+                <p>Description: Healthy and pure saffron from Kashmir. Enjoy the best taste and aroma.</p>
+              </div>
+              <div className="order-status">
+                <h2>Order Status: <span>{order.orderStatus}</span></h2>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="login-message">
+            <h2>Please log in first to check your orders</h2>
+          </div>
+        )}
+      </div>
+      <Footer />
+      <style jsx>{`
+        .orders-container {
+          padding: 20px;
+          margin-top: 100px; /* Add margin to prevent overlap with the navbar */
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .order-card {
+          background-color: #fbe9d0;
+          padding: 20px;
+          margin: 20px 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          max-width: 800px;
+          box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          transition: transform 0.2s ease;
+        }
+        .order-card:hover {
+          transform: translateY(-5px);
+        }
+        .product-image {
+          border-radius: 8px;
+        }
+        .order-details {
+          flex: 1;
+          margin-left: 20px;
+        }
+        .order-details h3 {
+          margin-top: 10px;
+          font-size: 18px;
+        }
+        .order-details p {
+          margin: 5px 0;
+          color: #555;
+        }
+        .order-status {
+          text-align: right;
+        }
+        .order-status h2 {
+          margin: 0;
+          color: #444;
+        }
+        .order-status span {
+          color: #e67e22;
+        }
+        .login-message {
+          text-align: center;
+          padding: 100px;
+        }
+        .no-orders {
+          text-align: center;
+          padding: 100px;
+        }
+        @media (max-width: 768px) {
+          .order-card {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .order-details {
+            margin-left: 0;
+            margin-top: 20px;
+          }
+          .order-status {
+            text-align: left;
+            margin-top: 10px;
+          }
+        }
+      `}</style>
     </div>
-    <Footer/>
-    </>
-  )
-  
+  );
 };
 
 export default Products;
