@@ -1,0 +1,141 @@
+/* header.module.scss */
+
+.header {
+    position: fixed;
+    width: 100%;
+    background-color: #FBE9D0;
+    z-index: 1000; /* Ensure the header is above other content */
+  }
+  
+  .topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .logo {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icons img {
+    margin-left: 30px;
+  }
+  
+  .hamburgerMenu {
+    display: none;
+  }
+  
+  .hamburgerMenu input[type="checkbox"] {
+    display: none;
+  }
+  
+  .hamburgerMenu .menuIcon {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  
+  .hamburgerMenu .menuIcon div {
+    background-color: black;
+    height: 3px;
+    width: 30px;
+    margin: 5px 0;
+  }
+  
+  .nav {
+    display: none;
+    width: 100%;
+    text-align: center;
+    background-color: black; /* Set background color to black */
+  }
+  
+  .nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .nav ul li {
+    flex: 1; /* Make list items take up equal width */
+    min-width: 250px; /* Add a minimum width to prevent wrapping */
+    padding: 15px 30px; /* Increase padding for more space between items */
+    cursor: pointer;
+    background-color: black; /* Set background color to black */
+    color: white; /* Set text color to white for contrast */
+    white-space: nowrap; /* Prevent text from wrapping */
+  }
+  
+  .showMenu {
+    display: block;
+  }
+  
+  /* Hide icons on mobile, show on larger screens */
+  .hideOnMobile {
+    display: none;
+  }
+  
+  .showOnDesktop {
+    display: none;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .hamburgerMenu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .nav {
+      position: absolute;
+      top: 60px; /* Adjust based on your header height */
+      left: 0;
+      flex-direction: column;
+    }
+  
+    .nav ul {
+      flex-direction: column; /* Stack items vertically on mobile */
+    }
+  
+    .nav ul li {
+      border-bottom: 1px solid #FBE9D0; /* Add bottom border for separation */
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .hamburgerMenu {
+      display: none;
+    }
+  
+    .icons {
+      display: flex;
+    }
+  
+    .nav {
+      display: flex;
+      justify-content: center;
+    }
+  
+    .nav ul {
+      flex-direction: row;
+    }
+  
+    .nav ul li {
+      border-right: none; /* Remove borders between list items on desktop */
+      padding: 15px 40px; /* Increase padding for more space between items */
+    }
+  
+    .showOnDesktop {
+      display: block;
+    }
+  }
+  

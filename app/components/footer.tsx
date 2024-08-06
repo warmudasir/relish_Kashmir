@@ -1,86 +1,64 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 import facebook from "../../images/facebook-brands-solid.svg";
-import instagram from "../../images/instagram-brands-solid.svg"
+import instagram from "../../images/instagram-brands-solid.svg";
 import youtube from "../../images/youtube-brands-solid.svg";
-import { faC } from '@fortawesome/free-solid-svg-icons';
+import styles from './footer.module.scss'; // Adjust the path as needed
 
-const footer = () => {
+const Footer = () => {
   return (
-    <div style={{backgroundColor:"#FBE9D0",color:'black'}}>
-      {/* <div style={{width:'90%',height:'2px',backgroundColor:'solid 1px black',zIndex:'100'}}></div>   */}
-      <div style={{display:'flex',justifyContent:'space-between',padding:'10px',alignItems:'center'}}>
-        <div>
-
-        </div>
-        <div style={{display:'flex'}} className='mx-10'>
-        <Image
-          src={instagram}
-          alt="Center Logo"
-          width={40}
-          className='mx-5'
-        /> 
-        <Image
-        src={facebook}
-        alt="Center Logo"
-        width={40}
-        className='mx-5'
-      /> 
-       <Image
-      src={youtube}
-      alt="Center Logo"
-      width={40}
-      className='mx-5'
-    />
-        </div>
+    <div className={styles.footerContainer}>
+      <div className={styles.socialIcons}>
+        <Image src={instagram} alt="Instagram" width={40} />
+        <Image src={facebook} alt="Facebook" width={40} />
+        <Image src={youtube} alt="YouTube" width={40} />
       </div>
-      <div style={{display:'flex',justifyContent:'center',padding:'10px'}}>
-      <hr style={{ border: 'solid 1px black',width:'95%' }} />
+      <div className={styles.horizontalLine}>
+        <hr />
       </div>
-      <div style={{display:'flex',justifyContent:'space-between',padding:'20px 50px 50px 50px'}}>
+      <div className={styles.footerSections}>
         <div>
           <ul>
-            <li style={{marginBottom:'20px'}}><h2>BE THE FIRST TO KNOW</h2></li>
-            <li style={{marginBottom:'20px'}}><p>Get to Know more about relish kashmir</p></li>
-            <li style={{marginBottom:'10px'}}><input type='email' placeholder='Email' style={{width:'250px',height:'40px'}}></input></li>
-            <li style={{marginBottom:'20px'}}><button style={{backgroundColor:'black',color:'white',padding:'10px',width:'250px'}}>Subscribe</button></li>
+            <li><h2>BE THE FIRST TO KNOW</h2></li>
+            <li><p>Get to Know more about Relish Kashmir</p></li>
+            <li><input type='email' placeholder='Email' /></li>
+            <li><button>Subscribe</button></li>
           </ul>
         </div>
         <div>
           <ul>
-            <li style={{marginBottom:'20px'}}><h2>Contact us</h2></li>
-            <li  style={{marginBottom:'20px'}}>support@relishKashmir.com</li>
-            <li  style={{marginBottom:'20px'}}>+91-9797352800</li>
-            {/* <li  style={{marginBottom:'20px'}}>h3</li> */}
+            <li><h2>Contact Us</h2></li>
+            <li>support@relishKashmir.com</li>
+            <li>+91-9797352800</li>
           </ul>
         </div>
         <div>
           <ul>
-            <li  style={{marginBottom:'20px'}}><h2>Support</h2></li>
-            <li  style={{marginBottom:'20px'}}>Contact Us</li>
-            <li  style={{marginBottom:'20px'}}>Shipping Status</li>
-            <li  style={{marginBottom:'20px'}}>Frequently Asked Questions</li>
+            <li><h2>Support</h2></li>
+            <li>Contact Us</li>
+            <li>Shipping Status</li>
+            <li>Frequently Asked Questions</li>
           </ul>
         </div>
         <div>
           <ul>
-            <li  style={{marginBottom:'20px'}}><h2>About Relish Kashmir</h2></li>
-            <li  style={{marginBottom:'20px'}}>Jobs</li>
-            <li  style={{marginBottom:'20px'}}>Wholesale</li>
-            <li  style={{marginBottom:'20px'}}>Blog</li>
-            <li  style={{marginBottom:'20px'}}>Admin</li>
+            <li><h2>About Relish Kashmir</h2></li>
+            <li>Jobs</li>
+            <li>Wholesale</li>
+            <li>Blog</li>
+            <li>Admin</li>
           </ul>
         </div>
       </div>
-      <div style={{display:'flex',justifyContent:'center',padding:'10px'}}>
-      <hr style={{ border: 'solid 1px black',width:'95%' }} />
+      <div className={styles.horizontalLine}>
+        <hr />
       </div>
-      <div style={{display:'flex',justifyContent:'center'}}><p>
-      Proprietor: Shayeeb Mohammad War
-      </p></div>
-<div style={{textAlign:'center'}}><h1>&copy; All rights reserved 2023-24</h1></div>
+      <div className={styles.footerBottom}>
+        <p>Proprietor: Shayeeb Mohammad War</p>
+        <h1>&copy; All rights reserved 2023-24</h1>
+      </div>
     </div>
-  )
+  );
 }
 
-export default footer
+export default Footer;
