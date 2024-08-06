@@ -86,9 +86,17 @@
   .showOnDesktop {
     display: none;
   }
+
+  .userName{
+    margin: 0px 10px 0px 10px;
+  }
   
   /* Media Queries */
   @media (max-width: 768px) {
+    .userName {
+      display: none;
+    }
+
     .hamburgerMenu {
       display: flex;
       justify-content: center;
@@ -115,6 +123,8 @@
     .hamburgerMenu {
       display: none;
     }
+   
+    
   
     .icons {
       display: flex;

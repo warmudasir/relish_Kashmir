@@ -1,12 +1,11 @@
 "use client";
 
-import React from 'react';
-import Footer from '@/app/components/footer';
-import Header from '@/app/components/header';
-import styles from './signup.module.scss';
-import { useForm } from 'react-hook-form';
-// import { useRouter } from 'next/router';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import Footer from "@/app/components/footer";
+import Header from "@/app/components/header";
+import styles from "./signup.module.scss";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
   const router = useRouter();
@@ -14,38 +13,71 @@ const SignupPage = () => {
   const { register, handleSubmit } = useForm();
 
   const orderInfo = async (data: any) => {
-    data.role="user";
-    const response = await fetch('/api/users', {
-      method: 'POST',
+    data.role = "user";
+    const response = await fetch("/api/users", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
-    
+
     const result = await response.json();
     console.log(response);
     console.log(result.message);
     if (response.ok) {
       router.push("/login");
-    } else{
-      console.error('Failed to submit form');
+    } else {
+      console.error("Failed to submit form");
     }
   };
 
   return (
     <div>
       <Header />
-      <div style={{ padding: '100px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: '60%',backgroundColor: '#FBE9D0' }}>
-          <form onSubmit={handleSubmit(orderInfo)} style={{ width: '100%', border: '2px solid black', padding: '15px' }}>
-            <input type="text" placeholder='FirstName' className={styles.input} {...register('firstName')} />
-            <input type="text" placeholder='LastName' style={{ border: '1px solid black', width: '49%', marginTop: '20px', marginLeft: '2px' }} {...register('lastName')} />
-            <input type="email" placeholder='Email' style={{ border: '1px solid black', display: 'block', width: '100%', marginTop: '20px' }} {...register('email')} />
-            <input type="text" placeholder='Phone Number' style={{ border: '1px solid black', display: 'block', width: '100%', marginTop: '20px' }} {...register('phone')} />
-            <input type="text" placeholder='Password' style={{ border: '1px solid black', display: 'block', width: '100%', marginTop: '20px' }} {...register('password')} />
-            <button className='btn btn-secondary my-3'>Sign Up</button>
+      <div className={styles.signupContainer}>
+        <div className={styles.formWrapper}>
+          <form onSubmit={handleSubmit(orderInfo)} className={styles.signupForm}>
+            <input
+              type="text"
+              placeholder="First Name"
+              className={styles.input}
+              {...register("firstName")}
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              className={styles.input}
+              {...register("lastName")}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className={styles.input}
+              {...register("email")}
+            />
+            <input
+              type="text"
+              placeholder="Phone Number"
+              className={styles.input}
+              {...register("phone")}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className={styles.input}
+              {...register("password")}
+            />
+            <button type="submit" className={styles.signupButton}>
+              Sign Up
+            </button>
           </form>
+          <button
+            className={styles.loginRedirectButton}
+            onClick={() => router.push("/login")}
+          >
+            Already have an account? Login
+          </button>
         </div>
       </div>
       <Footer />

@@ -12,7 +12,7 @@ import styles from './header.module.scss';
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
-  const userData = getUserToken();
+  const userData = getUserToken(); // This will determine if the user is logged in
 
   const handleLogout = () => {
     localStorage.removeItem('token');  // Remove the user token
@@ -43,6 +43,12 @@ const Header = () => {
             width={25}
             className={styles.showOnDesktop}
           />
+          <div className={styles.userName}>
+          <h2 >
+  {userData && userData.firstName ? userData.firstName : ''}
+</h2>
+
+          </div>
         </div>
         <div className={styles.hamburgerMenu}>
           <input type="checkbox" id="menu-toggle" checked={menuOpen} onChange={() => setMenuOpen(!menuOpen)} />
@@ -58,8 +64,14 @@ const Header = () => {
         <ul>
           <li><Link href="/">All</Link></li>
           <li><Link href="/myorders">My Orders</Link></li>
-          <li><Link href="./login">{userData?.email ? userData.email : 'Login/Signup'}</Link></li>
-          <li onClick={handleLogout}>Logout</li>
+          {userData?.email ? (
+            <>
+              {/* <li>{userData.email}</li> */}
+              <li onClick={handleLogout}>Logout</li>
+            </>
+          ) : (
+            <li><Link href="/login">Login</Link></li>
+          )}
         </ul>
       </nav>
     </div>

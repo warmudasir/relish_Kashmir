@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import ProductCard from './productCard';
-import styles from './products.module.scss';
-import Link from 'next/link';
+import React, { useEffect, useState } from "react";
+import ProductCard from "./productCard";
+import styles from "./products.module.scss";
+import Link from "next/link";
 
 interface Product {
   _id: string;
@@ -19,14 +19,14 @@ const Products = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/data');
+        const response = await fetch("/api/data");
         if (!response.ok) {
-          throw new Error('Failed to fetch products');
+          throw new Error("Failed to fetch products");
         }
         const result = await response.json();
         setProducts(result);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error("Error fetching products:", error);
       } finally {
         setIsLoading(false);
       }
@@ -44,27 +44,24 @@ const Products = () => {
   }
 
   return (
-    <div style={{ padding: '100px' }} className={styles.body}>
+    <div className={styles.body}>
       {products.map((product) => {
         const isOutOfStock = product.quantity === 0;
 
         return (
           <div
             key={product._id}
+            className={styles.productWrapper}
             style={{
-              display: 'inline-block',
-              margin: '10px',
               opacity: isOutOfStock ? 0.5 : 1,
-              cursor: isOutOfStock ? 'not-allowed' : 'pointer',
+              cursor: isOutOfStock ? "not-allowed" : "pointer",
             }}
           >
             {isOutOfStock ? (
-              // Render product card without link when out of stock
               <ProductCard product={product} />
             ) : (
-              // Directly wrap ProductCard with Link
               <Link href={`/productdescription/${product._id}`} passHref>
-                <div style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div style={{ textDecoration: "none", color: "inherit" }}>
                   <ProductCard product={product} />
                 </div>
               </Link>

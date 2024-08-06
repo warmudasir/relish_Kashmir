@@ -16,7 +16,7 @@ export default function Home() {
   const [updatequantity, updateQuantity] = useState("");
   const [productName, setProductName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState("");
 
   if (userData === null || userData.role === "user") {
     router.push("/");
@@ -26,22 +26,21 @@ export default function Home() {
     router.push("/allorders");
   };
 
-  const addquantity= async (e) => {
+  const addquantity = async (e) => {
     e.preventDefault();
-    try{
-      const orderResponse = await fetch('/api/updatequantity', {
-        method: 'POST',
+    try {
+      const orderResponse = await fetch("/api/updatequantity", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-         updateQuantity,
-         productName
+          updateQuantity,
+          productName,
         }),
       });
-    }catch(error)
-    {
-      console.error('Error updating quantity');
+    } catch (error) {
+      console.error("Error updating quantity");
     }
   };
 
@@ -67,8 +66,14 @@ export default function Home() {
     if (res.ok) {
       const data = await res.json();
       setImageUrl(data.imageUrl);
+      setErrorMessage(""); // Clear any previous error message
     } else {
-      console.error("Error uploading image");
+      const errorData = await res.json();
+      if (errorData.error) {
+        setErrorMessage("The product with the same name already exists");
+      } else {
+        setErrorMessage("Error uploading image");
+      }
     }
   };
 
@@ -94,6 +99,11 @@ export default function Home() {
             }}
           >
             <h2>Add New Product</h2>
+            {errorMessage && (
+              <div style={{ color: "red", marginBottom: "10px" }}>
+                {errorMessage}
+              </div>
+            )}
             <input
               type="text"
               placeholder="Name"
@@ -149,8 +159,7 @@ export default function Home() {
           </form>
 
           <form
-
-          onSubmit={addquantity}
+            onSubmit={addquantity}
             style={{
               backgroundColor: "#f8f8f8",
               padding: "20px",
@@ -168,7 +177,7 @@ export default function Home() {
               style={{ width: "100%", marginBottom: "10px" }}
             />
             <label htmlFor="quantity">Quantity</label>
-           <input
+            <input
               type="number"
               placeholder="Quantity"
               value={updatequantity}
@@ -176,7 +185,7 @@ export default function Home() {
               style={{ width: "100%", marginBottom: "10px" }}
             />
             <button
-            type="submit"
+              type="submit"
               style={{
                 padding: "10px 20px",
                 backgroundColor: "#007bff",
@@ -211,4 +220,3 @@ export default function Home() {
     </div>
   );
 }
-

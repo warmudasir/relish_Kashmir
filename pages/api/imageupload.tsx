@@ -8,12 +8,11 @@ import { MongoClient } from 'mongodb';
 const uri = 'mongodb://localhost:27017';
 const dbName = 'relishKashmir';
 
-
 // Define the upload directory
 const uploadDir = './public/uploads';
 
 // Ensure the upload directory exists
-if (!fs.existsSync(uploadDir)){
+if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
@@ -40,44 +39,39 @@ const apiRoute = nextConnect({
 
 apiRoute.use(upload.single('file'));
 
-apiRoute.post(async(req, res) => {
+apiRoute.post(async (req, res) => {
   const client = await new MongoClient(uri);
   await client.connect();
-    
+
   const db = client.db(dbName);
-  
   const collection = db.collection('items');
   const { name, description, price, quantity } = req.body;
   const imageUrl = `/uploads/${req.file.filename}`;
 
-  const product = {
-    name,
-    description,
-    price: parseFloat(price),
-    quantity: parseInt(quantity, 10),
-    imageUrl,
-  };
+  try {
+    // Check if a product with the same name already exists
+    const existingProduct = await collection.findOne({ name });
+    if (existingProduct) {
+      res.status(400).json({ error: 'Product with the same name already exists' });
+      return;
+    }
 
-  await collection.insertOne({ name,description,price,quantity,imageUrl });
-  // console.log("Works");
-  res.status(200).json({ imageUrl: `/uploads/${req.file.filename}` });
+    const product = {
+      name,
+      description,
+      price: parseFloat(price),
+      quantity: parseInt(quantity, 10),
+      imageUrl,
+    };
+
+    await collection.insertOne(product);
+    res.status(200).json({ imageUrl });
+  } catch (error) {
+    res.status(500).json({ error: `Failed to insert product: ${error.message}` });
+  } finally {
+    await client.close();
+  }
 });
-
-// apiRoute.post(async (req, res) => {
-//   console.log("Works");
-//   const client = await new MongoClient(uri);
-//   await client.connect();
-    
-//   const db = client.db(dbName);
-  
-//   const collection = db.collection('images');
-
-//   const imageUrl = `/uploads/${req.file.filename}`;
-//   await collection.insertOne({ imageUrl });
-
-//   res.status(200).json({ imageUrl });
-// });
-
 
 export default apiRoute;
 
